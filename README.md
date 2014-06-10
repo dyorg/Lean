@@ -26,6 +26,7 @@ With Lean I can construct apps really fast, using mvc, namespaces, autoloader, r
 	-- .htaccess
 -- settings
 	-- Bootstrap.php
+	-- Routes.php
 -- vendor
 	-- Lean
 	-- Symfony (Symfony/Component/ClassLoader/*)
@@ -34,13 +35,13 @@ With Lean I can construct apps really fast, using mvc, namespaces, autoloader, r
 
 ## Easy configuration
 
-create file "index.php" into public_html
+create file **index.php** into public_html
 
 ```php
 <?php require_once '../settings/Bootstrap.php'; ?>
  ```
 
-create file ".htaccess" into public_html to custom urls
+create file **.htaccess** into public_html to custom urls
 
 ```bash
 RewriteEngine On
@@ -51,7 +52,7 @@ RewriteRule ^.*$ - [NC,L]
 RewriteRule ^.*$ index.php [NC,L]
 ```
 
-create file "autoloader.php" into vendor, I'm using the Symfony Autoloader (Symfony/Component/ClassLoader/*)
+create file **autoloader.php** into vendor, I'm using the Symfony Autoloader (Symfony/Component/ClassLoader/*)
 
 ```php
 <?php
@@ -68,7 +69,7 @@ $loader->useIncludePath(true);
 $loader->register();
 ```
 
-create file "Bootstrap.php" into settings
+create file **Bootstrap.php** into settings
 
 ```php
 <?php
@@ -107,6 +108,8 @@ Lean\Launch::instance()->run();
 It's work, access in your browser 
 http://localhost/lean_project/public_html
 
+Remember, in your domain shows only **www.yourdomain.com**
+
 ```php
 <?php
 namespace app\main\controllers;
@@ -120,8 +123,10 @@ class IndexController extends \Lean\App
 }
 ```
 
-Call non-default module, controller and method, type in your browser
+Call non-default module, controller and method, type in your browser localhost
 http://localhost/lean_project/public_html/foo/product/do-something
+
+Remember, in your domain shows only **www.yourdomain.com/foo/product/do-something**
 
 ```php
 <?php
@@ -186,7 +191,7 @@ class ProductController extends \Lean\App
 
 ## Using Views
 
-Create followings views "index.phtml" and "edit.phtml" into views
+Create followings views **index.phtml** and **edit.phtml** into views
 
 ```php
 -- app
@@ -203,7 +208,7 @@ Create followings views "index.phtml" and "edit.phtml" into views
 				-- footer.phtml
 ```
 
-Configure header and footer default into bootstrap.php before launch Lean
+Configure header and footer default into **Bootstrap.php** before launch Lean
 
 ```php
 ...
@@ -313,3 +318,12 @@ Route::alias('do-something', 'product/do');
 ```php
 Route::alias(array('do-something', 'do-something2', 'foo', 'bar'), 'product/do');
 ```
+
+## License
+
+Lean is released under MIT public license.
+
+http://www.opensource.org/licenses/MIT
+
+Copyright (c) 2014, Dyorg Almeida
+<dyorg.almeida@gmail.com>
