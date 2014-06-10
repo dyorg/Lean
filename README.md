@@ -1,8 +1,9 @@
 # Lean Framework PHP
 
-Lean Framework is a tiny PHP framework.
+Lean Framework is a tiny PHP framework, modern frameworks are powerfull but so much complicated.
+With Lean I can construct apps really fast, using mvc, namespaces, autoloader, routes and more.
 
-## My structure 
+## Basic structure 
 
 ```php
 -- app
@@ -41,7 +42,7 @@ create file "index.php" into public_html
 
 create file ".htaccess" into public_html to custom urls
 
-```php
+```bash
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} -s [OR]
 RewriteCond %{REQUEST_FILENAME} -l [OR]
@@ -67,7 +68,7 @@ $loader->useIncludePath(true);
 $loader->register();
 ```
 
-create file "bootstrap.php" into settings
+create file "Bootstrap.php" into settings
 
 ```php
 <?php
@@ -101,3 +102,107 @@ setlocale(LC_ALL, 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'portuguese');
 Lean\Launch::instance()->run();
 ```
 
+## Create a controller
+
+It's work, access in your browser 
+http://localhost/lean_project/public_html
+
+```php
+<?php
+namespace app\main\controllers;
+
+class IndexController extends \Lean\App
+{
+	public function index()
+	{		
+		echo 'HELLO WORLD';
+	}
+}
+```
+
+Call non-default module, controller and method, type in your browser
+http://localhost/lean_project/public_html/foo/product/do-something
+
+```php
+<?php
+namespace app\foo\controllers;
+
+class ProductController extends \Lean\App
+{
+	public function do_something()
+	{		
+		/*
+		 * your action here
+		 */
+	}
+}
+```
+
+## using routes
+
+add into bootstrap before launch Lean
+
+```php
+...
+
+/*
+ * routes
+ */
+Lean\Route::set_routes_path('settings/Routes.php');
+
+/**
+ * init lean framework
+ */
+Lean\Launch::instance()->run();
+```
+
+### Basic route
+
+create file "Routes.php" into settings
+
+```php
+<?php
+use Lean\Route;
+
+Route::set('foo/bar', function() {
+	echo 'Hi';
+});
+```
+
+### Route to method in controller
+
+```php
+<?php
+use Lean\Route;
+
+Route::set('product/do', array(
+	'module' => 'basic', 
+	'controller' => 'product',
+	'method' => 'do_something'
+));
+```
+
+### Route to method in controller, same result as above but with clousure and call controller manually
+
+```php
+<?php
+use Lean\Route;
+
+Route::set('product/do', function() {
+	new app/basic/controllers/ProductController::singleton->do_something();
+});
+```
+
+### Simple alias
+
+```php
+<?php
+Route::alias('do-something', 'product/do');
+```
+
+### Multiple alias
+
+```php
+<?php
+Route::alias(array('do-something', 'do-something2', 'foo', 'bar'), 'product/do');
+```
