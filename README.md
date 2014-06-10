@@ -247,9 +247,9 @@ class ProductController extends \Lean\App
 ```
 
 
-## using routes
+## Using routes
 
-add into bootstrap before launch Lean
+add into **Bootstrap.php** before launch Lean
 
 ```php
 ...
