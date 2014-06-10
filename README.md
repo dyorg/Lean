@@ -138,6 +138,115 @@ class ProductController extends \Lean\App
 }
 ```
 
+## Using REQUEST object into controller
+
+http://localhost/lean_project/public_html/foo/product?name=foo&category=bar&price=15
+
+```php
+<?php
+namespace app\foo\controllers;
+
+class ProductController extends \Lean\App
+{
+	public function index()
+	{		
+		/**
+		 * get HTTP $_REQUEST
+		 */
+		$request = $this->request();
+		$name = $request->name;
+		$category = $request->category;
+		$price = $request->price;
+	
+	
+		/**
+		 * get only $_POST
+		 */
+		$request = $this->request()->post();		
+
+		
+		/**
+		 * get only $_GET
+		 */
+		$request = $this->request()->get();		
+
+		
+		/**
+		 * get only $_FILE
+		 */		 
+		 $request = $this->request()->file();		
+		 
+		 
+		/*
+		 * your action here
+		 */
+	}
+}
+```
+
+## Using Views
+
+Create followings views "index.phtml" and "edit.phtml" into views
+
+```php
+-- app
+	-- foo (module)
+		-- controllers
+			-- ProductController.php
+		-- models
+		-- views
+			-- product
+				-- index.phtml
+				-- edit.phtml
+			-- layout
+				-- header.phtml
+				-- footer.phtml
+```
+
+Configure header and footer default into bootstrap.php before launch Lean
+
+```php
+...
+
+/**
+ * views config
+ */
+Lean\View::set_header_default('app/foo/views/layout/header.phtml');
+Lean\View::set_footer_default('app/foo/views/layout/footer.phtml');
+
+
+/**
+ * init lean framework
+ */
+Lean\Launch::instance()->run();
+```
+Controllers shows yours views
+
+```php
+<?php
+namespace app\foo\controllers;
+
+class ProductController extends \Lean\App
+{
+	public function index()
+	{	
+		/**
+		 * this render file "../views/product/index.phtml"
+		 */
+		$this->view()->render();
+	}
+	
+	public function edit()
+	{	
+		/**
+		 * this render file "../views/product/edit.phtml"
+		 */
+		$this->view()->render('edit');
+	}
+}
+```
+
+
 ## using routes
 
 add into bootstrap before launch Lean
@@ -145,7 +254,7 @@ add into bootstrap before launch Lean
 ```php
 ...
 
-/*
+/**
  * routes
  */
 Lean\Route::set_routes_path('settings/Routes.php');
@@ -196,13 +305,11 @@ Route::set('product/do', function() {
 ### Simple alias
 
 ```php
-<?php
 Route::alias('do-something', 'product/do');
 ```
 
 ### Multiple alias
 
 ```php
-<?php
 Route::alias(array('do-something', 'do-something2', 'foo', 'bar'), 'product/do');
 ```
