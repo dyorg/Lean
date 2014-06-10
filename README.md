@@ -272,7 +272,7 @@ Lean\Launch::instance()->run();
 
 ### Basic route
 
-create file "Routes.php" into settings
+create file **Routes.php** into settings
 
 ```php
 <?php
