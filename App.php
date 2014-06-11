@@ -29,8 +29,6 @@ class App extends Singleton
 		}
 	}
 	
-	public function auth() {}
-	
 	public function format() 
 	{ 
 		return Format::singleton(); 
@@ -45,10 +43,6 @@ class App extends Singleton
 	{	
 		return Request::singleton(); 
 	}
-	
-	public function router() {}
-	
-	public function session() {}
 	
 	public function view() 
 	{

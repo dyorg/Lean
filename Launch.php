@@ -20,11 +20,11 @@ class Launch
 	private function dispache($module, $controller, $method)
 	{
 		if(empty($module)) {
-			$method = Config::get_route_module_default();
+			$module = Route::get_route_module_default();
 		}
 		
 		if(empty($controller)) {
-			$controller = Config::get_route_controller_default();
+			$controller = Route::get_route_controller_default();
 		}
 		
 		if(empty($method)) {
@@ -112,7 +112,7 @@ class Launch
 		 */
 		if(empty($info)) 
 		{
-			$route_default = Config::get_route_default();
+			$route_default = Route::get_route_default();
 			if(!empty($route_default)) $info = $route_default; 
 		}
 		

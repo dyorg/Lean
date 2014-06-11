@@ -3,13 +3,13 @@ namespace Lean;
 
 class View
 {
-// 	private $footer = array();
+	private $footer = array();
 	
-// 	private $header = array();
+	private $header = array();
 	
 	private $view = array();
 	
-// 	private $page = array();
+	private $page = array();
 	
 	public $lean;
 	
@@ -17,9 +17,9 @@ class View
 	
 	static private $extension_default = '.phtml'; 
 	
-// 	static private $footer_default = null;
+	static private $footer_default = null;
 	
-// 	static private $header_default = null;
+	static private $header_default = null;
 	
 	
 	public static function singleton($classname)
@@ -44,10 +44,10 @@ class View
 	 * 
 	 * @param string $path_header Full file path 
 	 */
-// 	public static function set_footer_default($path_footer)
-// 	{
-// 		self::$footer_default = $path_footer;
-// 	}
+	public static function set_footer_default($path_footer)
+	{
+		self::$footer_default = $path_footer;
+	}
 	
 	/**
 	 * Set a default page header 
@@ -59,20 +59,20 @@ class View
 	 * 
 	 * @param string $path_header Full file path 
 	 */
-// 	public static function set_header_default($path_header)
-// 	{
-// 		self::$header_default = $path_header;
-// 	}
+	public static function set_header_default($path_header)
+	{
+		self::$header_default = $path_header;
+	}
 	
-// 	public static function unset_footer_default()
-// 	{
-// 		self::$footer_default = null;
-// 	}
+	public static function unset_footer_default()
+	{
+		self::$footer_default = null;
+	}
 	
-// 	public static function unset_header_default()
-// 	{
-// 		self::$header_default = null;
-// 	}
+	public static function unset_header_default()
+	{
+		self::$header_default = null;
+	}
 
 	private function __construct($classname) 
 	{			
@@ -92,15 +92,35 @@ class View
 		
 		$this->lean = $this->app = App::singleton();
 	}
+	
+	public function render($options = 'index') 
+	{ 
+		/**
+		 * render header page
+		 */
+		$this->render_header();
 		
-	public function render($options = 'index')
+		/**
+		 * render content page
+		 */
+		$this->set_options_views('view', $options);
+		$this->render_exe('view');
+		
+		/**
+		 * render footer page
+		 */
+		$this->render_footer();
+	}
+
+	
+	public function render2($options = 'index')
 	{
 		/**
 		 * render content page
 		*/
-		$this->temp = array();
-		$this->set_options_views('temp', $options);
-		$this->make('temp');
+		$this->render2 = array();
+		$this->set_options_views('render2', $options);
+		$this->render_exe('render2');
 		
 		return $this;
 	}
@@ -108,7 +128,8 @@ class View
 	public function set($name, $options = 'index')
 	{
 		$this->$name = array();
-		$this->set_options_views($name, $options);
+		$this->set_options_views($name, $options);	
+
 		return $this;
 	}
 	
@@ -154,61 +175,56 @@ class View
 		}
 	}
 	
-// 	public function redirect($url) 
-// 	{
-// 		header('location:' . $url); die();
-// 	}
-		
-	public function make($name)
+	public function redirect($url) 
 	{
-		include_once $this->{$name}['app'] . DIRECTORY_SEPARATOR . $this->{$name}['module'] . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $this->{$name}['directory'] . DIRECTORY_SEPARATOR . $this->{$name}['page'] . $this->{$name}['extension'];
+		header('location:' . $url); die();
+	}
+		
+	private function render_exe($var = 'view')
+	{	
+		include_once $this->{$var}['app'] . DIRECTORY_SEPARATOR . $this->{$var}['module'] . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $this->{$var}['directory'] . DIRECTORY_SEPARATOR . $this->{$var}['page'] . $this->{$var}['extension'];
 	}
 	
-// 	private function render_exe($var = 'view')
-// 	{	
-// 		include_once $this->{$var}['app'] . DIRECTORY_SEPARATOR . $this->{$var}['module'] . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $this->{$var}['directory'] . DIRECTORY_SEPARATOR . $this->{$var}['page'] . $this->{$var}['extension'];
-// 	}
+	private function render_footer()
+	{
+		if(!empty($this->footer))
+		{
+			$this->render_exe('footer');
+		}
+		elseif (!is_null(self::$footer_default))
+		{
+			include_once self::$footer_default;
+		}
+	}
 	
-// 	private function render_footer()
-// 	{
-// 		if(!empty($this->footer))
-// 		{
-// 			$this->render_exe('footer');
-// 		}
-// 		elseif (!is_null(self::$footer_default))
-// 		{
-// 			include_once self::$footer_default;
-// 		}
-// 	}
+	private function render_header()
+	{
+		if(!empty($this->header))
+		{
+			$this->render_exe('header');
+		}
+		elseif (!is_null(self::$header_default))
+		{
+			include_once self::$header_default;
+		}
+	}
 	
-// 	private function render_header()
-// 	{
-// 		if(!empty($this->header))
-// 		{
-// 			$this->render_exe('header');
-// 		}
-// 		elseif (!is_null(self::$header_default))
-// 		{
-// 			include_once self::$header_default;
-// 		}
-// 	}
-	
-// 	public function render_page($options = 'index')
-// 	{
-// 		$this->set_options_views('page', $options);
+	public function render_page($options = 'index')
+	{
+		$this->set_options_views('page', $options);
 		
-// 		$this->render_exe('page');
-// 	}
+		$this->render_exe('page');
+	}
 	
-// 	public function set_footer($options = 'footer')
-// 	{
-// 		$this->set_options_views('footer', $options);
-// 	}
+	public function set_footer($options = 'footer')
+	{
+		$this->set_options_views('footer', $options);
+	}
 	
-// 	public function set_header($options = 'header')
-// 	{
-// 		$this->set_options_views('header', $options);
-// 	}
+	public function set_header($options = 'header')
+	{
+		$this->set_options_views('header', $options);
+	}
 	
 	public function get_property($name = null)
 	{		
