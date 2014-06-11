@@ -3,24 +3,13 @@ namespace Lean;
 
 class View
 {
-// 	private $footer = array();
-	
-// 	private $header = array();
-	
 	private $view = array();
-	
-// 	private $page = array();
 	
 	public $lean;
 	
 	static private $instance;
 	
 	static private $extension_default = '.phtml'; 
-	
-// 	static private $footer_default = null;
-	
-// 	static private $header_default = null;
-	
 	
 	public static function singleton($classname)
 	{
@@ -33,52 +22,13 @@ class View
 	{
 		self::$extension_default = $extension;
 	}
-	
-	/**
-	 * Set a default page footer 
-	 * 
-	 * <code>
-	 * View::set_footer_default('app/main/views/layout/footer.phtml');
-	 * View::set_footer_default('app/layout/footer.phtml');
-	 * </code>
-	 * 
-	 * @param string $path_header Full file path 
-	 */
-// 	public static function set_footer_default($path_footer)
-// 	{
-// 		self::$footer_default = $path_footer;
-// 	}
-	
-	/**
-	 * Set a default page header 
-	 * 
-	 * <code>
-	 * View::set_header_default('app/main/views/layout/header.phtml');
-	 * View::set_header_default('app/layout/header.phtml');
-	 * </code>
-	 * 
-	 * @param string $path_header Full file path 
-	 */
-// 	public static function set_header_default($path_header)
-// 	{
-// 		self::$header_default = $path_header;
-// 	}
-	
-// 	public static function unset_footer_default()
-// 	{
-// 		self::$footer_default = null;
-// 	}
-	
-// 	public static function unset_header_default()
-// 	{
-// 		self::$header_default = null;
-// 	}
 
 	private function __construct($classname) 
 	{			
 		if ($lastnspos = strripos($classname, '\\')) 
 		{
 			$namespace = substr($classname, 0, $lastnspos);
+			
 			$classname = substr($classname, $lastnspos + 1);
 			
 			$this->view['directory'] = $this->view['class'] = strtolower(str_replace('Controller', '', $classname));
@@ -153,63 +103,12 @@ class View
 			}
 		}
 	}
-	
-// 	public function redirect($url) 
-// 	{
-// 		header('location:' . $url); die();
-// 	}
-		
+			
 	public function make($name)
 	{
 		include_once $this->{$name}['app'] . DIRECTORY_SEPARATOR . $this->{$name}['module'] . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $this->{$name}['directory'] . DIRECTORY_SEPARATOR . $this->{$name}['page'] . $this->{$name}['extension'];
 	}
-	
-// 	private function render_exe($var = 'view')
-// 	{	
-// 		include_once $this->{$var}['app'] . DIRECTORY_SEPARATOR . $this->{$var}['module'] . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $this->{$var}['directory'] . DIRECTORY_SEPARATOR . $this->{$var}['page'] . $this->{$var}['extension'];
-// 	}
-	
-// 	private function render_footer()
-// 	{
-// 		if(!empty($this->footer))
-// 		{
-// 			$this->render_exe('footer');
-// 		}
-// 		elseif (!is_null(self::$footer_default))
-// 		{
-// 			include_once self::$footer_default;
-// 		}
-// 	}
-	
-// 	private function render_header()
-// 	{
-// 		if(!empty($this->header))
-// 		{
-// 			$this->render_exe('header');
-// 		}
-// 		elseif (!is_null(self::$header_default))
-// 		{
-// 			include_once self::$header_default;
-// 		}
-// 	}
-	
-// 	public function render_page($options = 'index')
-// 	{
-// 		$this->set_options_views('page', $options);
 		
-// 		$this->render_exe('page');
-// 	}
-	
-// 	public function set_footer($options = 'footer')
-// 	{
-// 		$this->set_options_views('footer', $options);
-// 	}
-	
-// 	public function set_header($options = 'header')
-// 	{
-// 		$this->set_options_views('header', $options);
-// 	}
-	
 	public function get_property($name = null)
 	{		
 		if(array_key_exists($name, $this->view)) 
