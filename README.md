@@ -29,7 +29,6 @@ With Lean I can construct apps really fast, using mvc, namespaces, autoloader, r
 	-- Routes.php
 -- vendor
 	-- Lean
-	-- Symfony (Symfony/Component/ClassLoader/*)
 	-- autoloader.php
 ```
 
@@ -52,12 +51,12 @@ RewriteRule ^.*$ - [NC,L]
 RewriteRule ^.*$ index.php [NC,L]
 ```
 
-create file **autoloader.php** into vendor, I'm using the Symfony Autoloader (Symfony/Component/ClassLoader/*)
+create file **autoloader.php** into vendor directory, and use the Symfony Autoloader
 
 ```php
 <?php
 
-require_once __DIR__ . '/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+require_once __DIR__ . '/Lean/Libs/Symfony/Component/ClassLoader/UniversalClassLoader.php';
 
 $loader = new Symfony\Component\ClassLoader\UniversalClassLoader();
 $loader->registerNamespaces(array(
