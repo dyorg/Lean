@@ -1,7 +1,11 @@
 # Lean Framework PHP
 
-Lean Framework is a tiny PHP framework, modern frameworks are powerfull but so much complicated.
+Lean Framework is a tiny PHP framework (~40KB), modern frameworks are powerfull but so much complicated.
 With Lean I can construct apps really fast, using mvc, namespaces, autoloader, routes and more.
+
+## Requirement
+
+PHP 5.3+
 
 ## Basic structure 
 
