@@ -206,25 +206,33 @@ Create followings views **index.phtml** and **edit.phtml** into views
 			-- layout
 				-- header.phtml
 				-- footer.phtml
+				-- template.html
 ```
 
-Configure header and footer default into **Bootstrap.php** before launch Lean
+Create **template.phtml** in layout directory, you can include header and footer parts here
 
-```php
-...
+```html
+<html>
+<head>
+	<title>My new app</title>
+</head>
+<body>
 
-/**
- * views config
- */
-Lean\View::set_header_default('app/foo/views/layout/header.phtml');
-Lean\View::set_footer_default('app/foo/views/layout/footer.phtml');
+	<? $this->app->view->render('layout.header') ?>
 
-
-/**
- * init lean framework
- */
-Lean\Launch::instance()->run();
+	<div id="container">
+		<!--
+		-- content page setted in controller will be render here
+		-->
+		<? $this->app->view->make('content') ?>
+	</div>
+	
+	<? $this->app->view->render('layout.footer') ?>
+	
+</body>
+</html>
 ```
+
 Controllers shows yours views
 
 ```php
@@ -236,9 +244,14 @@ class ProductController extends \Lean\App
 	public function index()
 	{	
 		/**
-		 * this render file "../views/product/index.phtml"
+		 * set the product/index.phtml to be render
 		 */
-		$this->view()->render();
+		$this->view()->set('content', 'index');
+		
+		/*
+		 * render the template
+		 */
+		$this->view()->render('layout.template');
 	}
 	
 	public function edit()
@@ -246,7 +259,9 @@ class ProductController extends \Lean\App
 		/**
 		 * this render file "../views/product/edit.phtml"
 		 */
-		$this->view()->render('edit');
+		$this->view()->set('content', 'edit');
+		
+		$this->view()->render('layout.template');
 	}
 }
 ```
