@@ -58,10 +58,19 @@ create file **autoloader.php** into vendor directory, and use the Symfony Autolo
 
 require_once __DIR__ . '/Lean/Libs/Symfony/Component/ClassLoader/UniversalClassLoader.php';
 
+/*
+ * add new libs in autoloader is easy, clone libs in vendor directory and add array position, see example to Zend Framework and Amazon Web Service libs
+ * $loader->registerNamespaces(array(
+ * 		'Lean'     => __DIR__,
+ *		'Zend'     => __DIR__,
+ * 		'AWS'     => __DIR__
+ * ));
+ *
+ * Just for now add only Lean Framework PHP lib, see below
+ */
 $loader = new Symfony\Component\ClassLoader\UniversalClassLoader();
 $loader->registerNamespaces(array(
-	'Lean'     => __DIR__,
-    'Symfony'  => __DIR__,
+	'Lean'     => __DIR__
 ));
 
 $loader->useIncludePath(true);
