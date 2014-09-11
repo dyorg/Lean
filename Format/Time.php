@@ -58,4 +58,31 @@ class Time extends \Lean\Singleton
 
 		return sprintf("%d:%02d:%02d", $hours, $minutes, $seconds);
 	}
+
+	public static function sum($time1, $time2, $op = 'add')
+	{
+		$now = new \DateTime(Date::now(Date::FORMAT_DATE));
+		if ($op != 'add') $op == 'sub';
+	
+		$time1_slices = explode(':', $time1);
+		$time1_hour = isset($time1_slices[0]) ? (int) $time1_slices[0] : '00';
+		$time1_min	= isset($time1_slices[1]) ? (int) $time1_slices[1] : '00';
+		$time1_sec 	= isset($time1_slices[2]) ? (int) $time1_slices[2] : '00';
+	
+		$time2_slices = explode(':', $time2);
+		$time2_hour = isset($time2_slices[0]) ? (int) $time2_slices[0] : '00';
+		$time2_min 	= isset($time2_slices[1]) ? (int) $time2_slices[1] : '00';
+		$time2_sec 	= isset($time2_slices[2]) ? (int) $time2_slices[2] : '00';
+	
+		$now->add(new \DateInterval("PT{$time1_hour}H{$time1_min}M{$time1_sec}S"));
+		$now->{$op}(new \DateInterval("PT{$time2_hour}H{$time2_min}M{$time2_sec}S"));
+		$time = $now->format('H:i:s');
+	
+		return $time;
+	
+	}
+	
+	public static function subtract($time1, $time2) {
+		return self::sum($time1, $time2, 'sub');
+	}
 }

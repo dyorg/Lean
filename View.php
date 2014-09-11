@@ -108,6 +108,11 @@ class View
 	{
 		include_once $this->{$name}['app'] . DIRECTORY_SEPARATOR . $this->{$name}['module'] . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $this->{$name}['directory'] . DIRECTORY_SEPARATOR . $this->{$name}['page'] . $this->{$name}['extension'];
 	}
+	
+	public function redirect($url)
+	{
+		header('location:' . $url); die();
+	}
 		
 	public function get_property($name = null)
 	{		
