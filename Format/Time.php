@@ -18,22 +18,30 @@ class Time extends \Lean\Singleton
 	
 	public static function format($hour, $format)
 	{
-		if($format == self::FORMAT_HOUR_MINUTES)
+		if (empty($hour)) 
 		{
-			$hour_slices = explode(':', $hour);
-			$h = isset($hour_slices[0]) ? $hour_slices[0] : '00';
-			$m = isset($hour_slices[1]) ? $hour_slices[1] : '00';
-			return "$h:$m";
+			if($format == self::FORMAT_HOUR_MINUTES)
+				return '00:00';
+			
+			if($format == self::FORMAT_HOUR_MINUTES_SECONDS)
+				return '00:00:00';	
 		}
 		
-		if($format == self::FORMAT_HOUR_MINUTES_SECONDS)
-		{
-			$hour_slices = explode(':', $hour);
-			$h = isset($hour_slices[0]) ? $hour_slices[0] : '00';
-			$m = isset($hour_slices[1]) ? $hour_slices[1] : '00';
-			$s = isset($hour_slices[2]) ? $hour_slices[2] : '00';
-			return "$h:$m:$s";
-		}
+// 		{
+// 			$hour_slices = explode(':', $hour);
+// 			$h = isset($hour_slices[0]) ? $hour_slices[0] : '00';
+// 			$m = isset($hour_slices[1]) ? $hour_slices[1] : '00';
+// 			return "$h:$m";
+// 		}
+		
+// 		if($format == self::FORMAT_HOUR_MINUTES_SECONDS)
+// 		{
+// 			$hour_slices = explode(':', $hour);
+// 			$h = isset($hour_slices[0]) ? $hour_slices[0] : '00';
+// 			$m = isset($hour_slices[1]) ? $hour_slices[1] : '00';
+// 			$s = isset($hour_slices[2]) ? $hour_slices[2] : '00';
+// 			return "$h:$m:$s";
+// 		}
 		
 		return strftime($format, strtotime($hour));
 	}

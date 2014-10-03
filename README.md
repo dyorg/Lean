@@ -33,7 +33,6 @@ PHP 5.3+
 	-- Routes.php
 -- vendor
 	-- Lean
-	-- Symfony (Symfony/Component/ClassLoader/*)
 	-- autoloader.php
 ```
 
@@ -56,17 +55,26 @@ RewriteRule ^.*$ - [NC,L]
 RewriteRule ^.*$ index.php [NC,L]
 ```
 
-create file **autoloader.php** into vendor, I'm using the Symfony Autoloader (Symfony/Component/ClassLoader/*)
+create file **autoloader.php** into vendor directory, and use the Symfony Autoloader
 
 ```php
 <?php
 
-require_once __DIR__ . '/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+require_once __DIR__ . '/Lean/Libs/Symfony/Component/ClassLoader/UniversalClassLoader.php';
 
+/*
+ * add new libs in autoloader is easy, clone libs in vendor directory and add array position, see example to Zend Framework and Amazon Web Service libs
+ * $loader->registerNamespaces(array(
+ * 		'Lean'     => __DIR__,
+ *		'Zend'     => __DIR__,
+ * 		'AWS'     => __DIR__
+ * ));
+ *
+ * Just for now add only Lean Framework PHP lib, see below
+ */
 $loader = new Symfony\Component\ClassLoader\UniversalClassLoader();
 $loader->registerNamespaces(array(
-	'Lean'     => __DIR__,
-    'Symfony'  => __DIR__,
+	'Lean'     => __DIR__
 ));
 
 $loader->useIncludePath(true);
