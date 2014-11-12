@@ -95,7 +95,7 @@ class Date extends \Lean\Singleton
 	{
 		$date = str_replace('/', '-', $date);
 		
-		if(!preg_match('/^([0-9]{2})-([0-9]{2})-([0-9]{2|4})/', $date, $matches)) return false;
+		if(!preg_match('/^([0-9]{2})-([0-9]{2})-([0-9]{2,4})/', $date, $matches)) return false;
 		
 		if(!isset($matches[1]) || !isset($matches[2]) || !isset($matches[3]) ) return false;
 		
