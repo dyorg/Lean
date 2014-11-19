@@ -5,6 +5,9 @@ class Date extends \Lean\Singleton
 {
 	static private $instance;
 
+	/**
+	 * @var string Formatos para conversão
+	 */
 	const FORMAT_DATE = '%Y-%m-%d';
 	const FORMAT_DATE_TIME = '%Y-%m-%d %H:%M:%S';
 	const FORMAT_DATE_USER = '%d/%m/%Y';
@@ -13,6 +16,8 @@ class Date extends \Lean\Singleton
 	const FORMAT_DAY = '%d';
 	const FORMAT_MONTH = '%m';
 	const FORMAT_YEAR = '%Y';
+	const FORMAT_TIME = '%H:%M:%S';
+	const FORMAT_TIME_SHORT = '%H:%M';
 
 	public static function singleton()
 	{

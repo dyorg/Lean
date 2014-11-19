@@ -6,35 +6,46 @@ class Time extends \Lean\Singleton
 	static private $instance;
 	
 	const FORMAT_HOUR_MINUTES = '%H:%M';
-	
 	const FORMAT_HOUR_MINUTES_SECONDS = '%H:%M:%S';
 	
-	public static function singleton()
-	{
+	public static function singleton() {
 		if(!isset(self::$instance))	self::$instance = new self;
-	
 		return self::$instance;
 	}
 	
+	/**
+	 * Tratamento e Formatação de horas
+	 * Este método permite formatar horas maiores que 23:59:59
+	 * 
+	 * @example
+	 * echo format('12:10') // 12:10:00
+	 * echo format('122:10') // 122:10:00
+	 * echo format('12') // 12:00:00
+	 * echo format('12:60') // 12:59:00
+	 * echo format('12:99:99') // 12:59:59
+	 * 
+	 * @param string $hour Hora a ser formatada 00:00 ou 00:00:00
+	 * @param string $format Formato para conversão
+	 * @return string
+	 */
 	public static function format($hour, $format = self::FORMAT_HOUR_MINUTES_SECONDS)
 	{
-				
 		/* tratamento de horas, minutos e segundos */
 		list ($h, $m, $s) = array_pad( explode(':', $hour), 3, '00');   
 		$h = ( !is_numeric($h) ) ? '00' : str_pad($h , 2, '0');
 		$m = !is_numeric($m) ? '00' : ( $m > 59 ? '59' : str_pad($m , 2, '0') );
 		$s = !is_numeric($s) ? '00' : ( $s > 59 ? '59' : str_pad($s , 2, '0') );
 		
-		
 		if ($format == self::FORMAT_HOUR_MINUTES) return "$h:$m";
-		
 		if ($format == self::FORMAT_HOUR_MINUTES_SECONDS) return "$h:$m:$s";
-		
 		return strftime($format, strtotime($hour));
 	}
 	
-	public static function now()
-	{
+	/**
+	 * Retorna hora atual no formato HH:MM:SS
+	 * @return string Hora no formato HH:MM:SS
+	 */
+	public static function now() {
 		return date('H:i:s');
 	}
 
