@@ -73,7 +73,8 @@ class Date extends \Lean\Singleton
 	}
 
 	/**
-	 * @deprecated see function Date::validate_format_human
+	 * @deprecated
+	 * @see Date::validate_format_human
 	 */
 	public static function validateUser($date)
 	{
@@ -121,7 +122,8 @@ class Date extends \Lean\Singleton
 	}
 
 	/**
-	 * @deprecated see function Date::validate_format_machine
+	 * @deprecated
+	 * @see Date::validate_format_machine
 	 */
 	public static function validateFormatDatabase($date)
 	{
