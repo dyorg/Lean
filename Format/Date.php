@@ -18,6 +18,7 @@ class Date extends \Lean\Singleton
 	const FORMAT_YEAR = '%Y';
 	const FORMAT_TIME = '%H:%M:%S';
 	const FORMAT_TIME_SHORT = '%H:%M';
+	const FORMAT_DATE_TIME_HASH = '%Y%m%d_%H%M%S';
 
 	public static function singleton()
 	{
