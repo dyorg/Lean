@@ -1,6 +1,8 @@
 <?php
 namespace Lean;
 
+use Lean\Http\Request;
+
 class Launch
 {
 	private $action_method_to_launch;
@@ -38,47 +40,35 @@ class Launch
 	
 	private function get_info()
 	{
-	
-		/*
-		 * verifica url com index.php
-		 */
+		/* verifica url com index.php */
 		preg_match('/(.*)\/index.php(.*)/', $_SERVER["PHP_SELF"], $matches);
-		$PATH_ROOT = $matches[1];
-		$PATH_INFO = $matches[2];
-		
-		
-		/*
-		 * verifica url sem index.php
-		 */
-		if(!preg_match('/index.php/', $_SERVER["REQUEST_URI"]))
-		{
-			$PATH_INFO = str_replace($PATH_ROOT, '', $_SERVER["REQUEST_URI"]);
-				
-			if(preg_match('/(.*)[?]/', $PATH_INFO, $matches))
-			{
-				$PATH_INFO = $matches[1];
-			}
+
+		/* relative uri base */
+		$relative_uri_base = $matches[1];
+
+		/* route path information */
+		$path_info = $matches[2];
+
+		$url = Request::singleton()->getUrl();
+
+		/* verifica url sem index.php */
+		if(!preg_match('/index.php/', $url->getPath()))	{
+			$path_info = str_replace($relative_uri_base, '', $url->getPath());
 		}
 		
-		
-		/*
-		 * define url root 
-		 */
-		define(strtoupper(Config::get_root_path()), $PATH_ROOT.'/');
-		
-		
-		$PATH_INFO = trim($PATH_INFO, '/');
-		
-		
-		return $PATH_INFO;
-		
+		/* define url root */
+		define(strtoupper(Config::get_root_path()), $relative_uri_base.'/');
+
+		$path_info = trim($path_info, '/');
+
+		return $path_info;
 	}
 	
 	private function process()
 	{		
 		
 		$info = self::get_info();		
-		
+
 		/*
 		 * rotas
 		 */

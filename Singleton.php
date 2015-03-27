@@ -13,7 +13,7 @@ namespace Lean;
  * 
  * @package LeanFramework
  */
-abstract class Singleton
+abstract class Singleton extends \stdClass
 {
 	/**
 	 * Array of cached singleton objects.

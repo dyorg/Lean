@@ -5,6 +5,9 @@ class Date extends \Lean\Singleton
 {
 	static private $instance;
 
+	/**
+	 * @var string Formatos para conversão
+	 */
 	const FORMAT_DATE = '%Y-%m-%d';
 	const FORMAT_DATE_TIME = '%Y-%m-%d %H:%M:%S';
 	const FORMAT_DATE_USER = '%d/%m/%Y';
@@ -13,6 +16,9 @@ class Date extends \Lean\Singleton
 	const FORMAT_DAY = '%d';
 	const FORMAT_MONTH = '%m';
 	const FORMAT_YEAR = '%Y';
+	const FORMAT_TIME = '%H:%M:%S';
+	const FORMAT_TIME_SHORT = '%H:%M';
+	const FORMAT_DATE_TIME_HASH = '%Y%m%d_%H%M%S';
 
 	public static function singleton()
 	{
@@ -68,7 +74,8 @@ class Date extends \Lean\Singleton
 	}
 
 	/**
-	 * @deprecated see function Date::validate_format_human
+	 * @deprecated
+	 * @see Date::validate_format_human
 	 */
 	public static function validateUser($date)
 	{
@@ -95,7 +102,7 @@ class Date extends \Lean\Singleton
 	{
 		$date = str_replace('/', '-', $date);
 		
-		if(!preg_match('/^([0-9]{2})-([0-9]{2})-([0-9]{2|4})/', $date, $matches)) return false;
+		if(!preg_match('/^([0-9]{2})-([0-9]{2})-([0-9]{2,4})/', $date, $matches)) return false;
 		
 		if(!isset($matches[1]) || !isset($matches[2]) || !isset($matches[3]) ) return false;
 		
@@ -116,7 +123,8 @@ class Date extends \Lean\Singleton
 	}
 
 	/**
-	 * @deprecated see function Date::validate_format_machine
+	 * @deprecated
+	 * @see Date::validate_format_machine
 	 */
 	public static function validateFormatDatabase($date)
 	{

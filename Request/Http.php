@@ -7,8 +7,7 @@ class Http extends \Lean\Singleton
 
 	public function __construct($http_variable = null)
 	{
-		foreach ($http_variable as $key => $value)
-		{
+		foreach ($http_variable as $key => $value) {
 			$this->{$key} = $value;
 		}
 	}

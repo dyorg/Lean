@@ -43,8 +43,11 @@ class View
 		$this->lean = $this->app = App::singleton();
 	}
 		
-	public function render($options = 'index')
-	{
+	public function renderPath($pathfile) {
+		include_once $pathfile;
+	}
+	
+	public function render($options = 'index') {
 		/**
 		 * render content page
 		*/
@@ -104,13 +107,11 @@ class View
 		}
 	}
 			
-	public function make($name)
-	{
+	public function make($name) {
 		include_once $this->{$name}['app'] . DIRECTORY_SEPARATOR . $this->{$name}['module'] . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $this->{$name}['directory'] . DIRECTORY_SEPARATOR . $this->{$name}['page'] . $this->{$name}['extension'];
 	}
 	
-	public function redirect($url)
-	{
+	public function redirect($url) {
 		header('location:' . $url); die();
 	}
 		
