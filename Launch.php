@@ -19,7 +19,7 @@ class Launch
 		$this->process();		
 	}
 	
-	private function dispache($module, $controller, $method)
+	private function dispache($module, $controller, $method, array $params = null)
 	{
 		if(empty($module)) {
 			$module = Route::get_route_module_default();
@@ -34,8 +34,17 @@ class Launch
 		}
 		
 		$class = Config::get_application_path() . "\\" . Config::get_module_prefixe() . $module . "\\controllers\\" . $controller . "Controller";
-		
-		eval($class.'::singleton()->'.$method.'();');
+
+        if ($params) {
+            $num_param = 0;
+            $set_params = rtrim(str_repeat('$params[$num_param++],', count($params)), ',');
+        }
+        else {
+            $set_params = '';
+        }
+
+        eval($class.'::singleton()->'.$method.'('.$set_params.');');
+		//eval($class.'::singleton()->'.$method.'();');
 	}
 	
 	private function get_info()
@@ -87,8 +96,9 @@ class Launch
 					$module = isset($route['module']) ? $route['module'] : NULL;
 					$controller = isset($route['controller']) ? $route['controller'] : NULL;
 					$method = isset($route['method']) ? $route['method'] : NULL;
+                    $params = isset($route['params']) ? (array) $route['params'] : NULL;
 					
-					$this->dispache($module, $controller, $method);
+					$this->dispache($module, $controller, $method, $params);
 					
 				}
 				
