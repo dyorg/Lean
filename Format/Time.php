@@ -24,6 +24,7 @@ class Time extends \Lean\Singleton
 	 * echo format('12:60') // 12:59:00
 	 * echo format('12:99:99') // 12:59:59
      * echo format('1:1') // 01:01:00
+     * echo format('5:30') // 05:30:00
 	 * 
 	 * @param string $hour Hora a ser formatada 00:00 ou 00:00:00
 	 * @param string $format Formato para conversão
