@@ -44,7 +44,6 @@ class Launch
         }
 
         eval($class.'::singleton()->'.$method.'('.$set_params.');');
-		//eval($class.'::singleton()->'.$method.'();');
 	}
 	
 	private function get_info()
@@ -99,9 +98,9 @@ class Launch
                     $params = isset($route['params']) ? (array) $route['params'] : NULL;
 					
 					$this->dispache($module, $controller, $method, $params);
-					
+
 				}
-				
+
 				return true;
 			}
 		}

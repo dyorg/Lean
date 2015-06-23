@@ -140,7 +140,13 @@ class Url extends Singleton {
 	}
 
 	public function getUri() {
-		return $_SERVER['REQUEST_URI'];
+        $url = strtok($_SERVER['REQUEST_URI'], '?');
+
+        if (empty($url)) {
+            return $_SERVER['REQUEST_URI'];
+        } else {
+            return $url .'?'. urlencode($_SERVER['QUERY_STRING']);
+        }
 	}
 
 	public function getUrl() {
