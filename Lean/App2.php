@@ -1,7 +1,7 @@
 <?php
 namespace Lean;
 
-class App 
+class App2
 {					
 	public function format() 
 	{ 

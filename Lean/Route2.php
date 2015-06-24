@@ -1,7 +1,7 @@
 <?php
 namespace Lean;
 
-class Route
+class Route2
 {
 	static private $instance;
 

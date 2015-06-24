@@ -1,7 +1,7 @@
 <?php
 namespace Lean;
 
-class App extends Singleton 
+class App extends Singleton
 {				
 	/**
 	 * Verify either action is a method pre defined
@@ -28,22 +28,34 @@ class App extends Singleton
 			}
 		}
 	}
-	
+
+    /**
+     * @return Format
+     */
 	public function format() 
 	{ 
 		return Format::singleton(); 
 	}
-	
+
+    /**
+     * @return Logger
+     */
 	public function logger() 
 	{	
 		return Logger::singleton();
 	}
-	
+
+    /**
+     * @return Http\Request
+     */
 	public function request() 
-	{	
-		return Request::singleton(); 
+	{
+        return Http\Request::singleton();
 	}
-	
+
+    /**
+     * @return View
+     */
 	public function view() 
 	{
 		return View::singleton(get_class($this));
