@@ -171,20 +171,29 @@ class ProductController extends \Lean\App
 
 To ProductController example, the result is:
 
-> uri `/main/product` result is "About Product!"
-> uri `/main/product/index` result is "About Product!"
-> uri `/main/product/features-list` result is "Product list!"
-> uri `/main/product/features_list` result is "Product list!"
-> uri `/main/product/buy` result is "Processing your order..."
-> uri `/main/product/buy-action` result is "Processing your order..."
-> uri `/main/product/buy_action` result is "Processing your order..."
+> uri `/main/product` result is **About Product!**
+
+> uri `/main/product/index` result is **About Product!**
+
+> uri `/main/product/features-list` result is **Product list!**
+
+> uri `/main/product/features_list` result is **Product list!**
+
+> uri `/main/product/buy` result is **Processing your order...**
+
+> uri `/main/product/buy-action` result is **Processing your order...**
+
+> uri `/main/product/buy_action` result is **Processing your order...**
 
 To IndexController example, the result is:
 
-> uri `/` result is "Hello World!"
-> uri `/main` result is "Hello World!"
-> uri `/main/index` result is "Hello World!"
-> uri `/main/index/index` result is "Hello World!"
+> uri `/` result is **Hello World!**
+
+> uri `/main` result is **Hello World!**
+
+> uri `/main/index` result is **Hello World!**
+
+> uri `/main/index/index` result is **Hello World!**
 
 
 ## Custom routes
@@ -243,9 +252,11 @@ Route::set('learn-more-about-product', array(
 ));
 ```
 
-> Url `http://your-site.com/product` result is "About Product"
-> Url `http://your-site.com/resources` result is "Product List"
-> Url `http://your-site.com/learn-more-about-product` result is "Product List"
+> Url `http://your-site.com/product` result is **About Product**
+
+> Url `http://your-site.com/resources` result is **Product List**
+
+> Url `http://your-site.com/learn-more-about-product` result is **Product List**
 
 ### Route to different module
 
