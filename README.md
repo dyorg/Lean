@@ -1,50 +1,79 @@
-# Lean Framework PHP
+# Lean PHP Framework
 
-Lean Framework is a micro PHP framework (~40KB), modern frameworks are powerfull but so much complicated.
-With Lean I can construct apps really fast, using mvc, namespaces, autoloader, routes and more.
+Lean Framework is a micro PHP framework (~40KB). Modern frameworks are powerfull but so much complicated,
+the mostly of resources you never gonna use, some functionality sounds good but if you don't really need it's a
+only waste of time.
+With Lean you can construct fast e lightweight softwares, with follows resources:
 
-## Requirement
+* Structure MVC, REST or both;
+* Requests;
+* Routes (automatic or custom);
+* Namespaces;
+* Class autoload;
+* PHP code hidden;
+* Basic template engine;
+
+### Requirement
 
 PHP 5.3+
 
-## Basic structure 
+### Basic structure
 
 ```php
--- app
-	-- main (module)
-		-- controllers
-			-- BasicController.php
-		-- models
-		-- views
-			-- basic
-				-- index.phtml
-	-- secondary (other module)
-		-- controllers
-		-- models
-		-- views
--- public_html
-	-- css
-	-- js
-	-- img
-	-- index.php
-	-- .htaccess
--- settings
-	-- Bootstrap.php
-	-- Routes.php
--- vendor
-	-- Lean
-	-- autoloader.php
+-- rootdir
+    -- app
+        -- main (module)
+            -- controllers
+                -- HomeController.php
+            -- models
+            -- views
+                -- home
+                    -- index.phtml
+        -- Bootstrap.php
+        -- Routes.php
+    -- public_html
+        -- css
+        -- js
+        -- img
+        -- index.php
+        -- .htaccess
+    -- vendor
+        -- composer
+        -- lean
+        -- autoload.php
 ```
 
-## Easy configuration
+Create into your rootdir teh follows directories:
 
-create file **index.php** into public_html
+- **app**: You will write all your application php into app directory (controllers, models, views and configs), this way your application not stay exposed.
+
+- **public_html**: Into public_html directory we have only **index.php** as file .php. You can put all yours public files, like css, javascripts, images, fonts, etc.
+
+- **vendor**: Composer will create it and copy our lib to lean directory.
+
+## Getting started
+
+### Instalation
+
+Install via [Composer](http://getcomposer.org "Composer")
+
+```bash
+composer require lean/lean
+```
+
+### Easy configuration
+
+create file **index.php** into public_html directory
+
+> Into index.php we have only one line, all of rest application php keep safe into app directory.
 
 ```php
-<?php require_once '../settings/Bootstrap.php'; ?>
+<?php require_once '../app/Bootstrap.php'; ?>
  ```
 
 create file **.htaccess** into public_html to custom urls
+
+> Don't forget enable mod_rewrite on apache
 
 ```bash
 RewriteEngine On
@@ -55,44 +84,16 @@ RewriteRule ^.*$ - [NC,L]
 RewriteRule ^.*$ index.php [NC,L]
 ```
 
-create file **autoloader.php** into vendor directory, and use the Symfony Autoloader
+create file **Bootstrap.php** into app directory
 
 ```php
 <?php
-
-require_once __DIR__ . '/Lean/Libs/Symfony/Component/ClassLoader/UniversalClassLoader.php';
-
-/*
- * add new libs in autoloader is easy, clone libs in vendor directory and add array position, see example to Zend Framework and Amazon Web Service libs
- * $loader->registerNamespaces(array(
- * 		'Lean'     => __DIR__,
- *		'Zend'     => __DIR__,
- * 		'AWS'     => __DIR__
- * ));
- *
- * Just for now add only Lean Framework PHP lib, see below
- */
-$loader = new Symfony\Component\ClassLoader\UniversalClassLoader();
-$loader->registerNamespaces(array(
-	'Lean'     => __DIR__
-));
-
-$loader->useIncludePath(true);
-$loader->register();
-```
-
-create file **Bootstrap.php** into settings
-
-```php
-<?php
-require_once '../vendor/autoloader.php';
-
+require_once '../vendor/autoload.php';
 
 /**
- * errors
+ * errors - use E_ALL only in development
  */
 error_reporting(E_ALL);
-
 
 /**
  * include path
@@ -101,13 +102,12 @@ set_include_path(
 	PATH_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 
 	PATH_SEPARATOR . get_include_path());
 
-
 /** 
- * locale e zone 
+ * locale e zone
+ * Lean has some great Date and Hour classes, so keep it configured to use them
  */
 date_default_timezone_set('America/Sao_Paulo');
 setlocale(LC_ALL, 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'portuguese');
-
 
 /**
  * init lean framework
@@ -115,12 +115,13 @@ setlocale(LC_ALL, 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'portuguese');
 Lean\Launch::instance()->run();
 ```
 
-## Create a controller
+Well done! It's all configuration necessary to run like a pro.
 
-It's work, access in your browser 
-http://localhost/lean_project/public_html
 
-Remember, in your domain shows only **www.yourdomain.com**
+### Hello world! and first controller
+
+regardless of whether their application is rest or not, I think is a good ideia keep your access logic always into controllers,
+into Routes.php you keep only routes ;)
 
 ```php
 <?php
@@ -128,36 +129,149 @@ namespace app\main\controllers;
 
 class IndexController extends \Lean\App
 {
-	public function index()
-	{		
-		echo 'HELLO WORLD';
+	public function index() {
+		echo 'Hello World!';
 	}
 }
 ```
 
-Call non-default module, controller and method, type in your browser localhost
-http://localhost/lean_project/public_html/foo/product/do-something
+It's work, access in your browser
+http://localhost/rootdir/public_html
 
-Remember, in your domain shows only **www.yourdomain.com/foo/product/do-something**
+Remember, in your site type only **www.your-domain.com**, everything else php is hidden.
+
+
+### Automatic route controller
+
+http://localhost/rootdir/public_html/$1/$2/$3
+
+$1 : Module - if not informed, use main module (main directory)
+$2 : Controller - if not informed, instance indexController class
+$1 : Method - if not informed, call index method
 
 ```php
 <?php
-namespace app\foo\controllers;
+namespace app\main\controllers;
 
 class ProductController extends \Lean\App
 {
-	public function do_something()
-	{		
-		/*
-		 * your action here
-		 */
+    public function index() {
+        echo 'About Product'
+    }
+
+	public function festures_list() {
+		echo 'Product list';
+	}
+
+	public function buy_action() {
+	    echo 'Processing your order...'
 	}
 }
 ```
 
-## Using REQUEST object into controller
+To ProductController example, the result is:
 
-http://localhost/lean_project/public_html/foo/product?name=foo&category=bar&price=15
+uri: "/main/product" // result is 'About Product!'
+uri: "/main/product/index" // result is 'About Product!'
+uri: "/main/product/features-list" // result is 'Product list!'
+uri: "/main/product/features_list" // result is 'Product list!'
+uri: "/main/product/buy" // result is 'Processing your order...'
+uri: "/main/product/buy-action" // result is 'Processing your order...'
+uri: "/main/product/buy_action" // result is 'Processing your order...'
+
+To IndexController example, the result is:
+
+uri: "/" // result is 'Hello World!'
+uri: "/main" // result is 'Hello World!'
+uri: "/main/index" // result is 'Hello World!'
+uri: "/main/index/index" // result is 'Hello World!'
+
+
+## Custom routes
+
+### Config routes file
+
+In **app/Bootstrap.php** add file routes before init Lean
+
+```php
+...
+
+/**
+ * routes file
+ */
+Lean\Route::set_routes_path('app/Routes.php');
+
+/**
+ * init lean framework
+ */
+Lean\Launch::instance()->run();
+```
+
+### Basic route
+
+create file **Routes.php** into app directory
+
+```php
+<?php
+use Lean\Route;
+
+Route::set('foo/bar', function() {
+	echo 'Hi';
+});
+```
+
+Url: http://your-site.com/foo/bar // result is 'Hi'
+
+### Route to method in controller
+
+```php
+<?php
+use Lean\Route;
+
+Route::set('product', array(
+	'controller' => 'product',
+));
+
+Route::set('resources', array(
+	'controller' => 'product',
+	'method' => 'resources_list'
+));
+
+Route::set('learn-more-about-product', array(
+	'controller' => 'product',
+	'method' => 'resources_list'
+));
+```
+
+Url: http://your-site.com/product // result is 'About Product'
+Url: http://your-site.com/resources // result is 'Product List'
+Url: http://your-site.com/learn-more-about-product // result is 'Product List'
+
+### Route to different module
+
+```php
+<?php
+use Lean\Route;
+
+Route::set('checkout', array(
+    'module' => 'api'
+	'controller' => 'payment',
+));
+```
+
+### Simple route alias
+
+```php
+Route::alias('old-page-about-product', 'product');
+```
+
+### Multiple route alias
+
+```php
+Route::alias(array('old-page-about-product', 'foo', 'bar'), 'product');
+```
+
+## Request object
 
 ```php
 <?php
@@ -276,74 +390,6 @@ class ProductController extends \Lean\App
 		$this->view()->render('layout.template');
 	}
 }
-```
-
-
-## Using routes
-
-add into **Bootstrap.php** before launch Lean
-
-```php
-...
-
-/**
- * routes
- */
-Lean\Route::set_routes_path('settings/Routes.php');
-
-/**
- * init lean framework
- */
-Lean\Launch::instance()->run();
-```
-
-### Basic route
-
-create file **Routes.php** into settings
-
-```php
-<?php
-use Lean\Route;
-
-Route::set('foo/bar', function() {
-	echo 'Hi';
-});
-```
-
-### Route to method in controller
-
-```php
-<?php
-use Lean\Route;
-
-Route::set('product/do', array(
-	'module' => 'basic', 
-	'controller' => 'product',
-	'method' => 'do_something'
-));
-```
-
-### Route to method in controller, same result as above but with clousure and call controller manually
-
-```php
-<?php
-use Lean\Route;
-
-Route::set('product/do', function() {
-	new app/basic/controllers/ProductController::singleton->do_something();
-});
-```
-
-### Simple alias
-
-```php
-Route::alias('do-something', 'product/do');
-```
-
-### Multiple alias
-
-```php
-Route::alias(array('do-something', 'do-something2', 'foo', 'bar'), 'product/do');
 ```
 
 ## License
