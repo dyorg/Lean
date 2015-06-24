@@ -3,7 +3,7 @@ namespace Lean;
 
 use Lean\Request\Files;
 
-class Request extends Request\Http
+class Request2 extends Request\Http
 {	
 	const ANY 	= 'any';
 	const DELETE = 'delete';

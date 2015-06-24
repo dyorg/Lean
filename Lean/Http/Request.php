@@ -26,27 +26,52 @@ class Request extends Singleton
 		
 		return $this;
 	}
-	
-	public function post() {
-		return Post::singleton();
-	}
-	
+
+    /**
+     * @return Request
+     */
+    public function delete() {
+        return Post::singleton();
+    }
+
+    /**
+     * @return Request
+     */
+    public function files() {
+        return Files::singleton();
+    }
+
+    /**
+     * @return Request
+     */
 	public function get() {
 		return Get::singleton();
 	}
-	
-	public function delete() {
-		return Post::singleton();
-	}
-	
+
+    /**
+     * @return Request
+     */
+    public function head() {
+        return Post::singleton();
+    }
+
+    /**
+     * @return Request
+     */
+    public function post() {
+        return Post::singleton();
+    }
+
+    /**
+     * @return Request
+     */
 	public function put() {
 		return Post::singleton();
 	}
-	
-	public function head() {
-		return Post::singleton();
-	}
 
+    /**
+     * @return Method
+     */
 	public function getMethod() {
 		return Method::singleton();
 	}
