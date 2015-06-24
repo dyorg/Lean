@@ -43,7 +43,6 @@ class Launch
             $set_params = '';
         }
 
-        require_once $class.'.php';
         eval($class.'::singleton()->'.$method.'('.$set_params.');');
 	}
 	
