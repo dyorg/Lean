@@ -1,8 +1,8 @@
 {
     "name": "lean/lean",
-    "description": "Lean PHP is a micro Framework PHP.",
+    "description": "Lean PHP, a micro Framework PHP really simple.",
     "type": "library",
-    "keywords": ["framework", "micro", "api", "mvc"],
+    "keywords": ["microframework", "api", "rest", "mvc"],
     "homepage": "https://github.com/dyorg/Lean",
     "license": "MIT",
     "authors": [
