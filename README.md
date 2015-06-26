@@ -120,7 +120,7 @@ Lean\Launch::instance()->run();
 Well done! It's all configuration necessary to run like a pro.
 
 
-### Hello world! and first controller
+### Hello world
 
 Regardless of whether their application is rest or not, I think is a good ideia keep your access logic always into controllers,
 into Routes.php you keep only routes ;)
@@ -143,7 +143,7 @@ http://localhost/rootdir/public_html
 > Remember, in your site type only **www.your-domain.com**, everything else php is hidden.
 
 
-### Automatic route controller
+## Automatic route controller
 
 http://localhost/rootdir/public_html/`$1`/`$2`/`$3`
 
@@ -437,7 +437,7 @@ echo Date::now(Date::FORMAT_DATE_USER) // "dd/mm/YYYY"
 echo Date::now(Date::FORMAT_TIME) // "HH:MM:SS"
 ```
 
-### format date
+### Format date
 
 Format using constants date
 
@@ -534,7 +534,7 @@ echo Time::now(Time::FORMAT_HOUR_MINUTES) // "HH:MM"
 echo Time::now(Time::FORMAT_HOUR) // "HH"
 ```
 
-### format time
+### Format time
 
 Format time default
 
@@ -607,6 +607,6 @@ a brazilian startup that develops a simple productivity management and time trac
 
 ## License
 
-The Lean PHP framework is released under MIT public license.
-http://www.opensource.org/licenses/MIT
+The Lean PHP framework is released under MIT public license.  
+http://www.opensource.org/licenses/MIT  
 Copyright (c) 2015
