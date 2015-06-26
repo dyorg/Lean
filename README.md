@@ -229,7 +229,7 @@ Route::set('foo/bar', function() {
 });
 ```
 
-Url: http://your-site.com/foo/bar // result is 'Hi'
+> Url: http://your-site.com/foo/bar // result is 'Hi'
 
 ### Route to method in controller
 
@@ -284,69 +284,71 @@ Route::alias(array('old-page-about-product', 'foo', 'bar'), 'product');
 
 ## Request object
 
+Recovery request data in controllers
+
 ```php
 <?php
-namespace app\foo\controllers;
+namespace app\main\controllers;
 
 class ProductController extends \Lean\App
 {
 	public function index()
 	{		
+	    ...
+	    
 		/**
-		 * get HTTP $_REQUEST
+		 * get all methods - same of variable $_REQUEST
 		 */
-		$request = $this->request();
-		$name = $request->name;
-		$category = $request->category;
-		$price = $request->price;
-	
-	
-		/**
-		 * get only $_POST
-		 */
-		$request = $this->request()->post();		
-
+		echo $this->request->name;
+		echo $this->request->name;
 		
 		/**
-		 * get only $_GET
+		 * get only method post - same of variable $_POST
 		 */
-		$request = $this->request()->get();		
+		echo $this->request()->post()->name;
 
-		
 		/**
-		 * get only $_FILE
-		 */		 
-		 $request = $this->request()->file();		
+         * get only method post - same of variable $_POST
+         */
+		echo $this->request()->get()->name;
+
+		/**
+         * get only method file - same of variable $_FILE
+         */	 
+		 $request = $this->request()->file()->name;		
 		 
+		 /**
+		  * you can too instance request object
+		  */
+		 $request = new \Lean\Http\Request();
+		 $request->name
 		 
-		/*
-		 * your action here
-		 */
+		 ...
 	}
 }
 ```
 
 ## Using Views
 
-Create followings views **index.phtml** and **edit.phtml** into views
+In views directory, you must create `product` and `layout` subdirectories with `.phtml` files.
 
 ```php
--- app
-	-- foo (module)
-		-- controllers
-			-- ProductController.php
-		-- models
-		-- views
-			-- product
-				-- index.phtml
-				-- edit.phtml
-			-- layout
-				-- header.phtml
-				-- footer.phtml
-				-- template.html
+...
+    -- controllers
+        -- ProductController.php
+    -- models
+    -- views
+        -- **product**
+            -- index.phtml
+            -- edit.phtml
+        -- **layout**
+            -- header.phtml
+            -- footer.phtml
+            -- template.html
+...
 ```
 
-Create **template.phtml** in layout directory, you can include header and footer parts here
+Create `template.phtml´ in layout directory, you can include header and footer parts here
 
 ```html
 <html>
@@ -355,38 +357,39 @@ Create **template.phtml** in layout directory, you can include header and footer
 </head>
 <body>
 
+    <!-- include **header.phtml** from layout directory
 	<? $this->app->view->render('layout.header') ?>
 
 	<div id="container">
-		<!--
-		-- content page setted in controller will be render here
-		-->
+		<!-- include page setted in **content** variable via ProductController -->
 		<? $this->app->view->make('content') ?>
 	</div>
 	
+	<!-- include **footer.phtml** from layout directory
 	<? $this->app->view->render('layout.footer') ?>
 	
 </body>
 </html>
 ```
 
-Controllers shows yours views
+Rendering yours views
 
 ```php
 <?php
-namespace app\foo\controllers;
+namespace app\main\controllers;
 
 class ProductController extends \Lean\App
 {
 	public function index()
 	{	
 		/**
-		 * set the product/index.phtml to be render
+		 * set which page will rendered by **content** variable in **template.html**
+		 * by default, if informed only **index** will rendered .phtml file into product directory
 		 */
 		$this->view()->set('content', 'index');
 		
 		/*
-		 * render the template
+		 * render template
 		 */
 		$this->view()->render('layout.template');
 	}
@@ -394,13 +397,122 @@ class ProductController extends \Lean\App
 	public function edit()
 	{	
 		/**
-		 * this render file "../views/product/edit.phtml"
+		 * this example will rendered **/product/edit.phtml** file
 		 */
 		$this->view()->set('content', 'edit');
 		
+		/*
+         * render template
+         */
 		$this->view()->render('layout.template');
 	}
 }
+```
+
+## Date
+
+### Available date formats
+
+```php
+Date::FORMAT_DATE = 'YYYY-mm-dd';
+Date::FORMAT_DATE_TIME = 'YYYY-mm-dd HH:MM:SS';
+Date::FORMAT_DATE_USER = 'dd/mm/YYYY';
+Date::FORMAT_DATE_TIME_USER = 'dd/mm/YYYY HH:MM:SS';
+Date::FORMAT_DATE_LONG = 'Sexta-feira, 30 de janeiro de 2015';
+Date::FORMAT_DAY = 'dd';
+Date::FORMAT_MONTH = 'mm';
+Date::FORMAT_YEAR = 'YY';
+Date::FORMAT_TIME = 'HH:MM:SS';
+Date::FORMAT_TIME_SHORT = 'HH:MM';
+Date::FORMAT_DATE_TIME_HASH = 'YYYYmmdd_HHMMSS';
+```
+
+* `YYYY` : Year 4 digits  
+* `mm` : Month 2 digits  
+* `dd` : Day 2 digits  
+* `HH` : Hours 2 digits  
+* `MM` : Minutes 2 digits  
+* `SS` : Seconds 2 digits  
+
+### Now
+
+Print today date
+
+```php
+use Lean\Format\Date as Date;
+
+echo Date::now() // "YYYY-mm-dd HH:MM:SS" 
+echo Date::now(Date::FORMAT_DATE_USER) // "dd/mm/YYYY"
+echo Date::now(Date::FORMAT_TIME) // "HH:MM:SS"
+```
+
+### format date
+
+Format using constants date
+
+```php
+echo Date:format('2015-01-30 10:59:59', Date::FORMAT_DATE) // 2015-01-30
+echo Date:format('2015-01-30 10:59:59', Date::FORMAT_DATE_TIME) // 2015-01-30 10:59:59 (nothing change)
+echo Date:format('2015-01-30 10:59:59', Date::FORMAT_DATE_USER) // 30/01/2015
+echo Date:format('2015-01-30 10:59:59', Date::FORMAT_DATE_TIME_USER) // 30/01/2015 10:59:59
+echo Date:format('2015-01-30 10:59:59', Date::FORMAT_TIME_SHORT) // 10:59
+```
+
+Format to users
+
+```php
+echo Date:format_to_human('2015-01-30 10:59:59') // 30/01/30 10:59:59
+echo Date:format_to_human('2015-01-30') // 30/01/30
+echo Date:format_to_human('30/01/2015 10:59:59') // 30/01/30 10:59:59 (nothing change)
+echo Date:format_to_human('30/01/2015') // 30/01/30 (nothing change)
+echo Date:format_to_human('30/01/2015 10:59:59', Date::FORMAT_DATE_USER) // 30/01/30
+echo Date:format_to_human('2015-01-30 10:59:59', Date::FORMAT_DATE_USER) // 30/01/30
+```
+
+Format to datebase
+
+```php
+echo Date:format_to_machine('2015-01-30 10:59:59') // 2015-01-30 10:59:59 (nothing change)
+echo Date:format_to_machine('2015-01-30') // 2015-01-30 (nothing change)
+echo Date:format_to_machine('30/01/2015 10:59:59') // 2015-01-30 10:59:59
+echo Date:format_to_machine('30/01/2015') // 2015-01-30
+echo Date:format_to_machine('30/01/2015 10:59:59', Date::FORMAT_DATE) // 2015-01-30
+echo Date:format_to_machine('2015-01-30 10:59:59', Date::FORMAT_DATE) // 2015-01-30
+```
+
+### Validating date
+
+Validate date format
+
+```php
+echo Date::validate('01/01/2015'); // **true**
+echo Date::validate('01/01/2015 12:10:00'); // **true**
+echo Date::validate('2015-01-01'); // **true**
+echo Date::validate('2015-01-01 12:10:00'); // **true**
+echo Date::validate('201-501-01'); // false
+echo Date::validate('foo'); // false
+```
+
+Validate especific date user format (00/00/0000 00:00:00)
+
+```php
+echo Date::validate_format_human('01/01/2015'); // **true**
+echo Date::validate_format_human('01/01/2015 12:10:00'); // **true**
+echo Date::validate_format_human('2015-01-01'); // false
+echo Date::validate_format_human('2015-01-01 12:10:00'); // false
+echo Date::validate_format_human('201-501-01'); // false
+echo Date::validate_format_human('foo'); // false
+```
+
+Validate especific date datebase format (0000-00-00 00:00:00)
+
+```php
+echo Date::validate_format_machine('01/01/2015'); // false
+echo Date::validate_format_machine('01/01/2015 12:10:00'); // false
+echo Date::validate_format_machine('2015-01-01'); // **true**
+echo Date::validate_format_machine('2015-01-01 12:10:00'); // **true**
+echo Date::validate_format_machine('201-501-01'); // false
+echo Date::validate_format_machine('foo'); // false
 ```
 
 ## License
