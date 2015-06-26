@@ -173,20 +173,20 @@ class ProductController extends \Lean\App
 
 To ProductController example, the result is:
 
-> uri `/main/product` result is **About Product!**  
-> uri `/main/product/index` result is **About Product!**
-> uri `/main/product/features-list` result is **Product list!**
-> uri `/main/product/features_list` result is **Product list!**
-> uri `/main/product/buy` result is **Processing your order...**
-> uri `/main/product/buy-action` result is **Processing your order...**
+> uri `/main/product` result is **About Product!**   
+> uri `/main/product/index` result is **About Product!**  
+> uri `/main/product/features-list` result is **Product list!**  
+> uri `/main/product/features_list` result is **Product list!**  
+> uri `/main/product/buy` result is **Processing your order...**  
+> uri `/main/product/buy-action` result is **Processing your order...**  
 > uri `/main/product/buy_action` result is **Processing your order...**  
 
 To IndexController example, the result is:
 
 > uri `/` result is **Hello World!**  
-> uri `/main` result is **Hello World!**
-> uri `/main/index` result is **Hello World!**
-> uri `/main/index/index` result is **Hello World!**
+> uri `/main` result is **Hello World!**  
+> uri `/main/index` result is **Hello World!**  
+> uri `/main/index/index` result is **Hello World!**  
 
 
 ## Custom routes
@@ -476,10 +476,10 @@ echo Date:format_to_machine('2015-01-30 10:59:59', Date::FORMAT_DATE) // 2015-01
 Validate date format
 
 ```php
-echo Date::validate('01/01/2015'); // **true**
-echo Date::validate('01/01/2015 12:10:00'); // **true**
-echo Date::validate('2015-01-01'); // **true**
-echo Date::validate('2015-01-01 12:10:00'); // **true**
+echo Date::validate('01/01/2015'); // true
+echo Date::validate('01/01/2015 12:10:00'); // true
+echo Date::validate('2015-01-01'); // true
+echo Date::validate('2015-01-01 12:10:00'); // true
 echo Date::validate('201-501-01'); // false
 echo Date::validate('foo'); // false
 ```
@@ -487,8 +487,8 @@ echo Date::validate('foo'); // false
 Validate especific date user format (00/00/0000 00:00:00)
 
 ```php
-echo Date::validate_format_human('01/01/2015'); // **true**
-echo Date::validate_format_human('01/01/2015 12:10:00'); // **true**
+echo Date::validate_format_human('01/01/2015'); // true
+echo Date::validate_format_human('01/01/2015 12:10:00'); // true
 echo Date::validate_format_human('2015-01-01'); // false
 echo Date::validate_format_human('2015-01-01 12:10:00'); // false
 echo Date::validate_format_human('201-501-01'); // false
@@ -500,8 +500,8 @@ Validate especific date datebase format (0000-00-00 00:00:00)
 ```php
 echo Date::validate_format_machine('01/01/2015'); // false
 echo Date::validate_format_machine('01/01/2015 12:10:00'); // false
-echo Date::validate_format_machine('2015-01-01'); // **true**
-echo Date::validate_format_machine('2015-01-01 12:10:00'); // **true**
+echo Date::validate_format_machine('2015-01-01'); // true
+echo Date::validate_format_machine('2015-01-01 12:10:00'); // true
 echo Date::validate_format_machine('201-501-01'); // false
 echo Date::validate_format_machine('foo'); // false
 ```
@@ -600,14 +600,13 @@ echo Time::subtract('12:30:00', '13:00:00'); // 23:30:00
 
 ##Author
 
-The Lean PHP framework was created by [Dyorg Almeida](http://facebook.com/dyorg.almeida "Dyorg Facebook page"), a full-stack web developer specialist and entrepreneur.
-Dyorg is founder and CEO of [Rabbiit](http://rabbiit.com "Rabbiit.com"), a brazilian startup that developed a simple productivity management and time tracking software.    
+The Lean PHP framework was created by [Dyorg Almeida](http://facebook.com/dyorg.almeida "Dyorg Facebook page"), 
+a full-stack web developer expert and entrepreneur.
+Dyorg is founder and CEO of [Rabbiit](http://rabbiit.com "Rabbiit.com"), 
+a brazilian startup that develops a simple productivity management and time tracking software.    
 
 ## License
 
 The Lean PHP framework is released under MIT public license.
-
 http://www.opensource.org/licenses/MIT
-
-Copyright (c) 2014, Dyorg Almeida
-<dyorg.almeida@gmail.com>
+Copyright (c) 2015
