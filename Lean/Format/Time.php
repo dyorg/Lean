@@ -7,7 +7,10 @@ class Time extends \Lean\Singleton
 	
 	const FORMAT_HOUR_MINUTES = '%H:%M';
 	const FORMAT_HOUR_MINUTES_SECONDS = '%H:%M:%S';
-	
+    const FORMAT_HOUR = '%H';
+    const FORMAT_MINUTES = '%M';
+    const FORMAT_SECONDS = '%S';
+
 	public static function singleton() {
 		if(!isset(self::$instance))	self::$instance = new self;
 		return self::$instance;
@@ -55,9 +58,13 @@ class Time extends \Lean\Singleton
 	 * Retorna hora atual no formato HH:MM:SS
 	 * @return string Hora no formato HH:MM:SS
 	 */
-	public static function now() {
-		return date('H:i:s');
-	}
+//	public static function now() {
+//		return date('H:i:s');
+//	}
+
+    public static function now($format = self::FORMAT_HOUR_MINUTES_SECONDS) {
+        return strftime($format);
+    }
 
 	public static function time_to_seconds($time) {
 		$hours = substr($time, 0, -6);
@@ -72,7 +79,7 @@ class Time extends \Lean\Singleton
 		$minutes = floor($seconds % 3600 / 60);
 		$seconds = $seconds % 60;
 
-		return sprintf("%d:%02d:%02d", $hours, $minutes, $seconds);
+		return sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds);
 	}
 
 	public static function sum($time1, $time2, $op = 'add')

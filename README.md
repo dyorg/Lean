@@ -1,6 +1,6 @@
 # Lean PHP Framework
 
-Lean Framework is a micro PHP framework (~40KB). Modern frameworks are powerfull but so much complicated,
+Lean PHP Framework is a micro framework PHP (~40KB). Modern frameworks are powerfull but so much complicated,
 the mostly of resources you never gonna use, some functionality sounds good but if you don't really need it's a
 only waste of time.
 With Lean you can construct fast e lightweight softwares, with follows resources:
@@ -12,6 +12,8 @@ With Lean you can construct fast e lightweight softwares, with follows resources
 * Class autoload;
 * PHP code hidden;
 * Basic template engine;
+* Date and Time manipulation;
+* Easy configuration;
 
 ### Requirement
 
@@ -45,11 +47,11 @@ PHP 5.3+
 
 Create into your rootdir teh follows directories:
 
-- **app**: You will write all your application php into app directory (controllers, models, views and configs), this way your application not stay exposed.
+- `app`: You will write all your application php into app directory (controllers, models, views and configs), this way your application not stay exposed.
 
-- **public_html**: Into public_html directory we have only **index.php** as file .php. You can put all yours public files, like css, javascripts, images, fonts, etc.
+- `public_html`: Into public_html directory we have only **index.php** as file .php. You can put all yours public files, like css, javascripts, images, fonts, etc.
 
-- **vendor**: Composer will create it and copy our lib to lean directory.
+- `vendor`: Composer will create it and copy our lib to lean directory.
 
 ## Getting started
 
@@ -63,7 +65,7 @@ composer require lean/lean
 
 ### Easy configuration
 
-create file **index.php** into public_html directory
+create file `index.php` into **public_html** directory
 
 > Into index.php we have only one line, all of rest application php keep safe into app directory.
 
@@ -71,7 +73,7 @@ create file **index.php** into public_html directory
 <?php require_once '../app/Bootstrap.php'; ?>
  ```
 
-create file **.htaccess** into public_html to custom urls
+create file `.htaccess` into **public_html** directory to custom urls works
 
 > Don't forget enable mod_rewrite on apache
 
@@ -84,7 +86,7 @@ RewriteRule ^.*$ - [NC,L]
 RewriteRule ^.*$ index.php [NC,L]
 ```
 
-create file **Bootstrap.php** into app directory
+Create file `Bootstrap.php` into **app** directory
 
 ```php
 <?php
@@ -120,7 +122,7 @@ Well done! It's all configuration necessary to run like a pro.
 
 ### Hello world! and first controller
 
-regardless of whether their application is rest or not, I think is a good ideia keep your access logic always into controllers,
+Regardless of whether their application is rest or not, I think is a good ideia keep your access logic always into controllers,
 into Routes.php you keep only routes ;)
 
 ```php
@@ -171,28 +173,19 @@ class ProductController extends \Lean\App
 
 To ProductController example, the result is:
 
-> uri `/main/product` result is **About Product!**
-
+> uri `/main/product` result is **About Product!**  
 > uri `/main/product/index` result is **About Product!**
-
 > uri `/main/product/features-list` result is **Product list!**
-
 > uri `/main/product/features_list` result is **Product list!**
-
 > uri `/main/product/buy` result is **Processing your order...**
-
 > uri `/main/product/buy-action` result is **Processing your order...**
-
-> uri `/main/product/buy_action` result is **Processing your order...**
+> uri `/main/product/buy_action` result is **Processing your order...**  
 
 To IndexController example, the result is:
 
-> uri `/` result is **Hello World!**
-
+> uri `/` result is **Hello World!**  
 > uri `/main` result is **Hello World!**
-
 > uri `/main/index` result is **Hello World!**
-
 > uri `/main/index/index` result is **Hello World!**
 
 
@@ -200,7 +193,7 @@ To IndexController example, the result is:
 
 ### Config routes file
 
-In **app/Bootstrap.php** add file routes before init Lean
+In `app/Bootstrap.php` add file routes before launch Lean
 
 ```php
 ...
@@ -218,7 +211,7 @@ Lean\Launch::instance()->run();
 
 ### Basic route
 
-create file **Routes.php** into app directory
+create file `Routes.php` into **app** directory
 
 ```php
 <?php
@@ -252,11 +245,9 @@ Route::set('learn-more-about-product', array(
 ));
 ```
 
-> Url `http://your-site.com/product` result is **About Product**
-
-> Url `http://your-site.com/resources` result is **Product List**
-
-> Url `http://your-site.com/learn-more-about-product` result is **Product List**
+> Url `http://your-site.com/product` result is **About Product**  
+> Url `http://your-site.com/resources` result is **Product List**  
+> Url `http://your-site.com/learn-more-about-product` result is **Product List**  
 
 ### Route to different module
 
@@ -300,7 +291,7 @@ class ProductController extends \Lean\App
 		 * get all methods - same of variable $_REQUEST
 		 */
 		echo $this->request->name;
-		echo $this->request->name;
+		echo $this->request->last_name;
 		
 		/**
 		 * get only method post - same of variable $_POST
@@ -338,17 +329,17 @@ In views directory, you must create `product` and `layout` subdirectories with `
         -- ProductController.php
     -- models
     -- views
-        -- **product**
+        -- product
             -- index.phtml
             -- edit.phtml
-        -- **layout**
+        -- layout
             -- header.phtml
             -- footer.phtml
             -- template.html
 ...
 ```
 
-Create `template.phtml´ in layout directory, you can include header and footer parts here
+Create `template.phtml` in layout directory, you can include header and footer parts here
 
 ```html
 <html>
@@ -357,15 +348,15 @@ Create `template.phtml´ in layout directory, you can include header and footer 
 </head>
 <body>
 
-    <!-- include **header.phtml** from layout directory
+    <!-- include header.phtml from layout directory -->
 	<? $this->app->view->render('layout.header') ?>
 
 	<div id="container">
-		<!-- include page setted in **content** variable via ProductController -->
+		<!-- include page setted in content variable via ProductController -->
 		<? $this->app->view->make('content') ?>
 	</div>
 	
-	<!-- include **footer.phtml** from layout directory
+	<!-- include footer.phtml from layout directory
 	<? $this->app->view->render('layout.footer') ?>
 	
 </body>
@@ -383,8 +374,8 @@ class ProductController extends \Lean\App
 	public function index()
 	{	
 		/**
-		 * set which page will rendered by **content** variable in **template.html**
-		 * by default, if informed only **index** will rendered .phtml file into product directory
+		 * set which page will rendered by "content" variable in "template.html"
+		 * by default, if informed only "index" will rendered .phtml file into product directory
 		 */
 		$this->view()->set('content', 'index');
 		
@@ -397,7 +388,7 @@ class ProductController extends \Lean\App
 	public function edit()
 	{	
 		/**
-		 * this example will rendered **/product/edit.phtml** file
+		 * this example will rendered "/product/edit.phtml" file
 		 */
 		$this->view()->set('content', 'edit');
 		
@@ -515,9 +506,106 @@ echo Date::validate_format_machine('201-501-01'); // false
 echo Date::validate_format_machine('foo'); // false
 ```
 
+## Time
+
+### Available time formats
+
+```php
+Time::FORMAT_HOUR_MINUTES = 'HH:MM';
+Time::FORMAT_HOUR_MINUTES_SECONDS = 'HH:MM:SS';
+Time::FORMAT_HOUR = 'HH';
+Time::FORMAT_MINUTES = 'MM';
+Time::FORMAT_SECONDS = 'SS';
+```
+
+* `HH` : Hours 2 digits  
+* `MM` : Minutes 2 digits  
+* `SS` : Seconds 2 digits
+
+### Now
+
+Print time at moment
+
+```php
+use Lean\Format\Time as Time;
+
+echo Time::now() // "HH:MM:SS" 
+echo Time::now(Time::FORMAT_HOUR_MINUTES) // "HH:MM"
+echo Time::now(Time::FORMAT_HOUR) // "HH"
+```
+
+### format time
+
+Format time default
+
+```php
+echo Time::format('12:10') // 12:10:00
+echo Time::format('122:10') // 122:10:00
+echo Time::format('12') // 12:00:00
+echo Time::format('12:60') // 12:59:00
+echo Time::format('12:99:99') // 12:59:59
+echo Time::format('1:1') // 01:01:00
+echo Time::format('5:30') // 05:30:00
+```
+
+Format using constants time
+
+```php
+echo Time::format('12:10', Time::FORMAT_HOUR_MINUTES_SECONDS) // 12:10:00
+echo Time::format('12:10:5', Time::FORMAT_HOUR_MINUTES_SECONDS) // 12:10:05
+echo Time::format('12', Time::FORMAT_HOUR_MINUTES_SECONDS) // 12:00:00
+
+echo Time::format('12:10:15', Time::FORMAT_HOUR_MINUTES) // 12:10
+echo Time::format('12', Time::FORMAT_HOUR_MINUTES) // 12:00
+echo Time::format('2:10:15', Time::FORMAT_HOUR_MINUTES) // 02:10
+```
+
+### Converter time
+
+Convert time to seconds
+
+```php
+echo Time::time_to_seconds('01:30:00') // 5400
+echo Time::time_to_seconds('01:15:00') // 4500
+echo Time::time_to_seconds('00:01:15') // 75
+echo Time::time_to_seconds('48:00:00') // 172800
+```
+
+Convert seconds to time
+
+```php
+echo Time::seconds_to_time('5400') // 01:30:00
+echo Time::seconds_to_time('4500') // 01:15:00 
+echo Time::seconds_to_time('75') // 00:01:15
+echo Time::seconds_to_time('172800') // 48:00:00
+```
+
+### Calculate time
+
+Sum time
+
+```php
+echo Time::sum('01:15:00', '02:30:05'); // 03:45:05
+echo Time::sum('12:30:00', '07:00:00'); // 19:30:00
+echo Time::sum('12:30:00', '12:00:00'); // 00:30:00
+```
+
+Subtract time
+
+```php
+echo Time::subtract('02:30:05', '01:15:00'); // 01:15:05
+echo Time::subtract('12:30:00', '07:00:00'); // 05:30:00
+echo Time::subtract('12:30:00', '13:00:00'); // 23:30:00
+```
+
+##Author
+
+The Lean PHP framework was created by [Dyorg Almeida](http://facebook.com/dyorg.almeida "Dyorg Facebook page"), a full-stack web developer specialist and entrepreneur.
+Dyorg is founder and CEO of [Rabbiit](http://rabbiit.com "Rabbiit.com"), a brazilian startup that developed a simple productivity management and time tracking software.    
+
 ## License
 
-Lean is released under MIT public license.
+The Lean PHP framework is released under MIT public license.
 
 http://www.opensource.org/licenses/MIT
 
