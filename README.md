@@ -598,12 +598,12 @@ echo Time::subtract('12:30:00', '07:00:00'); // 05:30:00
 echo Time::subtract('12:30:00', '13:00:00'); // 23:30:00
 ```
 
-##Author
+## Author
 
-The Lean PHP framework was created by [Dyorg Almeida](http://facebook.com/dyorg.almeida "Dyorg Facebook page"), 
-a full-stack web developer expert and entrepreneur.
-Dyorg is founder and CEO of [Rabbiit](http://rabbiit.com "Rabbiit.com"), 
-a brazilian startup that develops a simple productivity management and time tracking software.    
+Created by [Dyorg Almeida](br.linkedin.com/in/dyorgalmeida), a full-stack web developer and PHP expert ([Zend Certified Engineer]( http://www.zend.com/en/yellow-pages/ZEND020495)). 
+Today Dyorg is founder and CTO at [Rabbiit](http://rabbiit.com), a brazilian startup that develops a simple time tracking software.  
+
+http://rabbiit.com - Sign up for free  (available only in portuguese for now)
 
 ## License
 
